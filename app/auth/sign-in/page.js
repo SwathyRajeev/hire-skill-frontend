@@ -23,21 +23,18 @@ const SignIn = () => {
       const response = await axios.post(apiUrl, formData);
       const { accessToken } = response.data;
 
-      // Decode the JWT to extract the role
       const decodedToken = jwtDecode(accessToken);
       const role = decodedToken?.role;
 
-      // Store the token and role in localStorage
       localStorage.setItem("token", accessToken);
       localStorage.setItem("role", role);
 
-      // Update global auth state
       login(role);
-      // Redirect based on role
+
       if (role === "user") {
-        router.push("/user/tasks"); // Redirect to tasks page for users
+        router.push("/user/tasks");
       } else {
-        router.push("/provider/bid-task"); // Redirect to bid task page for providers
+        router.push("/provider/bid-task");
       }
       alert("Signed in successfully");
     } catch (error) {
@@ -53,8 +50,8 @@ const SignIn = () => {
         padding: 4,
         boxShadow: 3,
         borderRadius: 2,
-        backgroundColor: "background.paper", // Light background for dark mode
-        color: "text.primary", // Text color based on theme
+        backgroundColor: "background.paper",
+        color: "text.primary",
       }}
     >
       <Typography variant="h4" align="center" gutterBottom>
@@ -69,9 +66,9 @@ const SignIn = () => {
               name="username"
               onChange={handleChange}
               value={formData.username}
-              InputLabelProps={{ style: { color: "text.secondary" } }} // Label color
+              InputLabelProps={{ style: { color: "text.secondary" } }}
               InputProps={{
-                style: { color: "text.primary" }, // Input text color
+                style: { color: "text.primary" },
               }}
             />
           </Grid>

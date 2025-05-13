@@ -19,24 +19,38 @@ const SignUp = () => {
 
   const handleRoleChange = (event, newValue) => {
     setRole(newValue);
-    setFormData({}); // Reset form data when role changes
+    setFormData({});
   };
 
   const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
+    if (e.target.name == "providerType") {
+      const val = e.target.value === "individual" ? "individual" : "company";
+      setFormData({ ...formData, providerType: val });
+    } else {
+      setFormData({ ...formData, [e.target.name]: e.target.value });
+    }
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     const apiEndpoint =
-      role === "user" ? "/api/auth/signup" : "/api/provider/signup";
+      role === "user"
+        ? `${process.env.NEXT_PUBLIC_API_BASE_URL}/user/signup`
+        : `${process.env.NEXT_PUBLIC_API_BASE_URL}provider/signup`;
     try {
       const response = await axios.post(apiEndpoint, formData);
+
       localStorage.setItem("token", response.data.token);
       localStorage.setItem("role", response.data.role);
       alert(
         response.data.accessToken ? "Sign-up successful!" : "Sign-up failed."
       );
+
+      if (role === "user") {
+        router.push("/user/tasks");
+      } else {
+        router.push("/provider/bid-task");
+      }
     } catch (error) {
       alert("Error signing up");
     }

@@ -53,7 +53,7 @@ const AddTaskModal = ({ onClose, onSubmit }) => {
 
   return (
     <Dialog open onClose={onClose} fullWidth maxWidth="sm">
-      <DialogTitle>Add New Task</DialogTitle>
+      <DialogTitle >Add New Task</DialogTitle>
       <DialogContent>
         <Box component="form" onSubmit={handleSubmit} noValidate>
           <TextField
